@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, ToastController} from 'ionic-angular';
 
 /**
  * Generated class for the OrdersPage page.
@@ -14,11 +14,25 @@ import {NavController, NavParams} from 'ionic-angular';
 })
 export class OrdersPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public orders = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrdersPage');
+  }
+
+  processOrder(id) {
+      let toast = this.toast.create({
+        message: 'Order completed',
+        duration: 700,
+        position: 'bottom'
+      });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+      });
+      toast.present();
   }
 
 }

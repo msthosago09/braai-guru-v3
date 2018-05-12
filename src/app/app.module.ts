@@ -6,14 +6,20 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {OrdersPage} from "../pages/orders/orders";
-import {DataProvider} from "../pages/home/data";
 import {HttpClientModule} from "@angular/common/http";
+import {OrderModal} from "../pages/home/order-modal/order-modal";
+import {LoginModal} from "../pages/splash-page/login-modal/login-modal";
+import {SplashPage} from "../pages/splash-page/splash-page";
+import {DataProvider} from "../providers/data";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    OrdersPage
+    OrdersPage,
+    LoginModal,
+    OrderModal,
+    SplashPage
   ],
   imports: [
     BrowserModule,
@@ -22,9 +28,12 @@ import {HttpClientModule} from "@angular/common/http";
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    SplashPage,
     MyApp,
     HomePage,
-    OrdersPage
+    OrdersPage,
+    LoginModal,
+    OrderModal
   ],
   providers: [
     StatusBar,

@@ -3,7 +3,9 @@ var app      = express();
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var mongoose = require('mongoose');
 
+mongoose.connect('mongodb://heroku_7dkkjm9t:MahobalA8#@ds113640.mlab.com:13640/heroku_7dkkjm9t');
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
@@ -16,8 +18,65 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(express.static('www'));
-app.set('port', process.env.PORT || 5000);
-app.listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'));
+var MenuItem = mongoose.model('MenuItem', {
+  description: String,
+  price: Number
 });
+
+var Order = mongoose.model('Order', {
+  description: String,
+  quantity: Number
+});
+
+app.get('/api/orders', function(req, res) {
+  console.log("fetching orders");
+  Order.find(function(err, orders) {
+    if (err)
+      res.send(err)
+    res.json(orders);
+  });
+});
+
+app.post('/api/orders', function(req, res) {
+  console.log("creating order");
+
+  Order.create({
+    description : req.body.description,
+    quantity: req.body.quantity
+  }, function(err, order) {
+    if (err)
+      res.send(err);
+    Order.find(function(err, orders) {
+      if (err)
+        res.send(err)
+      res.json(orders);
+    });
+  });
+});
+
+app.get('/api/menuitems', function(req, res) {
+  console.log("fetching menuitems");
+  MenuItem.find(function(err, menuitems) {
+    if (err)
+      res.send(err)
+    res.json(menuitems);
+  });
+});
+
+app.post('/api/menuitems', function(req, res) {
+  console.log("creating order");
+
+  MenuItem.create({
+    description : req.body.description,
+    price: req.body.price
+  }, function(err, order) {
+    if (err)
+      res.send(err);
+    MenuItem.find(function(err, menuitems) {
+      if (err)
+        res.send(err)
+      res.json(menuitems);
+    });
+  });
+});
+

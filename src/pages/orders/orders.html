@@ -7,12 +7,39 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>orders</ion-title>
+    <ion-title>Orders</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div class="wrapper">
+    <section class="blue" (click)="processOrder('id')">
+      <h2>Angular</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Pellentesque nisl mi, mollis aliquet auctor eu, sodales et quam.
+        Vivamus fringilla ex at erat interdum euismod.
+        Vivamus posuere, leo lobortis fermentum tempor, tellus justo laoreet
+        lectus, ac feugiat nisi augue ac velit. Integer eget rhoncus leo.</p>
 
+      <p>Tap to complete order.</p>
+    </section>
+
+    <section class="red">
+      <h2>TypeScript</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl
+        mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat
+        interdum euismod.
+        Vivamus posuere, leo lobortis fermentum tempor, tellus justo laoreet lectus,
+        ac feugiat nisi augue ac velit. Integer eget rhoncus leo.</p>
+    </section>
+
+
+    <section class="red">
+      <h2>HTML5</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat interdum euismod.</p>
+    </section>
+
+  </div>
 </ion-content>

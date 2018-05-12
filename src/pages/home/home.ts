@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
-import {Observable} from "rxjs/Observable";
-import {DataProvider} from "./data";
+import {App, LoadingController, ModalController, ToastController} from 'ionic-angular';
+import {OrderModal} from "./order-modal/order-modal";
+import {DataProvider} from "../../providers/data";
 
 @Component({
   selector: 'page-home',
@@ -9,19 +9,53 @@ import {DataProvider} from "./data";
 })
 export class HomePage {
 
-  public menuItem = [];
-  private apiKey: String;
+  public menuItems = [];
+  private orderedItems:any;
+  private currentOrder: any;
 
-  constructor(public navCtrl: NavController, private data: DataProvider) {
-    this.apiKey = "kS8RS_y8mDFdM8AlwPkQ98YDiQy5w2A8";
+  constructor(public app: App, private data: DataProvider, public modalCtrl: ModalController, private toast: ToastController,
+              private loadingCtrl: LoadingController) {
+    this.orderedItems = new Set();
   }
-
 
   ionViewWillEnter() {
-    console.log("LOAD HOME PAGE");
-    this.data.getMenuItems().subscribe(data => {
-      console.log(data);
-    })
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present().then(() => {
+      this.data.getMenuItems().subscribe(data => {
+        this.menuItems = data;
+        loading.dismiss();
+      });
+    });
   }
 
+  openBasket(desc: string, price: number) {
+    let orderModal = this.modalCtrl.create(OrderModal, {orders: this.orderedItems});
+    orderModal.onDidDismiss(data => {
+      if(data == true){
+        this.showToast('Order completed');
+      }
+    });
+    orderModal.present();
+  }
+
+  addOrder(order: any) {
+    this.orderedItems.add(order);
+    this.showToast('Item added');
+    console.log(this.orderedItems)
+  }
+
+  showToast(msg:string) {
+    let toast = this.toast.create({
+      message: msg,
+      duration: 700,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+    toast.present();
+  }
 }
