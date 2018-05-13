@@ -41,6 +41,10 @@ export class OrderModal {
 
   }
 
+  closeModal(){
+    this.viewCtrl.dismiss(false);
+  }
+
   dismiss(status: boolean) {
     this.viewCtrl.dismiss(status);
   }
