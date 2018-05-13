@@ -1,7 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button (click)="openBasket()"><ion-icon name="basket" right></ion-icon>
-    </button>
+    <ion-buttons start>
+      <button ion-button (click)="openBasket()">
+        <ion-icon name="basket" right></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button outline ion-button (click)="openLoginModal()">
+        Admin
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -12,7 +20,8 @@
       pullingText="Pull to refresh"
       refreshingSpinner="circles"
       refreshingText="Refreshing...">
-    </ion-refresher-content>  </ion-refresher>
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid responsive-sm>
     <ion-row>
       <ion-col *ngFor="let order of menuItems" col-auto (click)="addOrder(order)">{{order.description}}<br/>R{{order.price}}

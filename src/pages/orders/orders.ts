@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {HomePage} from "../home/home";
 
 /**
  * Generated class for the OrdersPage page.
@@ -32,6 +33,10 @@ export class OrdersPage {
         console.log('Dismissed toast');
       });
       toast.present();
+  }
+
+  openMenuPage(){
+    this.navCtrl.setRoot(HomePage);
   }
 
 }

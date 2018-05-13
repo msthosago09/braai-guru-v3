@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {App, IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {App, ModalController, NavController} from 'ionic-angular';
 import {OrdersPage} from "../orders/orders";
-import {LoginModal} from "./login-modal/login-modal";
 import {HomePage} from "../home/home";
+import {LoginModal} from "../login-modal/login-modal";
 
 /**
  * Generated class for the OrdersPage page.

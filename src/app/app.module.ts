@@ -8,9 +8,9 @@ import {HomePage} from '../pages/home/home';
 import {OrdersPage} from "../pages/orders/orders";
 import {HttpClientModule} from "@angular/common/http";
 import {OrderModal} from "../pages/home/order-modal/order-modal";
-import {LoginModal} from "../pages/splash-page/login-modal/login-modal";
 import {SplashPage} from "../pages/splash-page/splash-page";
 import {DataProvider} from "../providers/data";
+import {LoginModal} from "../pages/login-modal/login-modal";
 
 @NgModule({
   declarations: [

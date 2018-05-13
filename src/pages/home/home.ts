@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
-import {AlertController, App, LoadingController, ModalController, ToastController} from 'ionic-angular';
+import {AlertController, App, LoadingController, ModalController, NavController, ToastController} from 'ionic-angular';
 import {OrderModal} from "./order-modal/order-modal";
 import {DataProvider} from "../../providers/data";
+import {OrdersPage} from "../orders/orders";
+import {LoginModal} from "../login-modal/login-modal";
 
 @Component({
   selector: 'page-home',
@@ -14,7 +16,7 @@ export class HomePage {
   private currentOrder: any;
 
   constructor(public app: App, private data: DataProvider, public modalCtrl: ModalController, private toast: ToastController,
-              private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+              private loadingCtrl: LoadingController, private alertCtrl: AlertController, private navCtrl:NavController) {
     this.orderedItems = new Set();
   }
 
@@ -44,7 +46,7 @@ export class HomePage {
           });
           popupAlert.present();
           loading.dismiss();
-          this.doRefresh(event);
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
       });
     });
   }
@@ -79,5 +81,15 @@ export class HomePage {
       console.log('Dismissed toast');
     });
     toast.present();
+  }
+
+  openLoginModal(){
+    let loginModal = this.modalCtrl.create(LoginModal);
+    loginModal.onDidDismiss(data => {
+      if(data === true){
+        this.navCtrl.setRoot(OrdersPage);
+      }
+    });
+    loginModal.present();
   }
 }
