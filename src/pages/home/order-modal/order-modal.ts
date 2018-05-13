@@ -22,11 +22,19 @@ export class OrderModal {
     this.ordersSet = this.navParams.get('orders');
     this.orders = Array.from(this.ordersSet);
     this.arrayLength  = this.orders.length;
-    console.log(this.orders);
+
+    for(let i = 0; i < this.arrayLength;i++){
+
+    }
+
     this.formGroup = new FormGroup({
       quantity: new FormControl('', Validators.required),
       paymentMethod: new FormControl('', Validators.required),
     });
+  }
+
+  quantityChange(quantChange){
+
   }
 
   placeOrder() {

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {App, LoadingController, ModalController, ToastController} from 'ionic-angular';
+import {AlertController, App, LoadingController, ModalController, ToastController} from 'ionic-angular';
 import {OrderModal} from "./order-modal/order-modal";
 import {DataProvider} from "../../providers/data";
 
@@ -14,8 +14,17 @@ export class HomePage {
   private currentOrder: any;
 
   constructor(public app: App, private data: DataProvider, public modalCtrl: ModalController, private toast: ToastController,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
     this.orderedItems = new Set();
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
   }
 
   ionViewWillEnter() {
@@ -26,11 +35,24 @@ export class HomePage {
       this.data.getMenuItems().subscribe(data => {
         this.menuItems = data;
         loading.dismiss();
+      },error =>{
+          const popupAlert = this.alertCtrl.create({
+            title: 'Failed!',
+            message: 'Retrying',
+            buttons: ['OK'],
+            enableBackdropDismiss: true
+          });
+          popupAlert.present();
+          loading.dismiss();
+          this.doRefresh(event);
       });
     });
   }
 
   openBasket(desc: string, price: number) {
+    if(this.orderedItems.size === 0){
+      return;
+    }
     let orderModal = this.modalCtrl.create(OrderModal, {orders: this.orderedItems});
     orderModal.onDidDismiss(data => {
       if(data == true){

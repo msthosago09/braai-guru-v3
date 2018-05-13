@@ -1,14 +1,18 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Braai Guru Menu
-    </ion-title>
     <button ion-button (click)="openBasket()"><ion-icon name="basket" right></ion-icon>
     </button>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>  </ion-refresher>
   <ion-grid responsive-sm>
     <ion-row>
       <ion-col *ngFor="let order of menuItems" col-auto (click)="addOrder(order)">{{order.description}}<br/>R{{order.price}}

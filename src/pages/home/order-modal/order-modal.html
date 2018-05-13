@@ -7,22 +7,23 @@
 </ion-header>
 
 <ion-content padding>
-  <!--  <form [formGroup]="formGroup" novalidate>
+  <table>
+    <tr *ngFor="let order of orders">
+      <td style="width:80%">{{order.description}}</td>
+      <td>
+        <ion-select [(ngModel)]="orderQuantity">
+        <ion-option>0</ion-option>
+        <ion-option>1</ion-option>
+        <ion-option>2</ion-option>
+        <ion-option>3</ion-option>
+        <ion-option>4</ion-option>
+        <ion-option>5</ion-option>
+      </ion-select></td>
+    </tr>
+  </table>
+    <form [formGroup]="formGroup" novalidate>
       <div *ngIf="arrayLength > 0">
         <ion-list>
-          <ion-grid>
-            <ion-row ion-item *ngFor="let order of orders">
-              <ion-col><p>{{order.description}}</p>
-                <ion-select [(ngModel)]="orderQuantity" formControlName="quantity">
-                  <ion-option>0</ion-option>
-                  <ion-option>1</ion-option>
-                  <ion-option>2</ion-option>
-                  <ion-option>3</ion-option>
-                  <ion-option>4</ion-option>
-                  <ion-option>5</ion-option>
-                </ion-select></ion-col>
-            </ion-row>
-          </ion-grid>
           <ion-item>
             <ion-label>Payment Method</ion-label>
             <ion-select [(ngModel)]="paymentM" formControlName="paymentMethod">
@@ -43,18 +44,5 @@
           </ion-item>
         </ion-list>
       </div>
-    </form>-->
-  <table>
-    <tr *ngFor="let order of orders">
-      <td style="width:80%">{{order.description}}</td>
-      <td><ion-select [(ngModel)]="orderQuantity">
-        <ion-option>0</ion-option>
-        <ion-option>1</ion-option>
-        <ion-option>2</ion-option>
-        <ion-option>3</ion-option>
-        <ion-option>4</ion-option>
-        <ion-option>5</ion-option>
-      </ion-select></td>
-    </tr>
-  </table>
+    </form>
 </ion-content>
