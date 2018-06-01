@@ -17,22 +17,24 @@ import {LoginModal} from "../login-modal/login-modal";
 export class SplashPage {
 
   public orders = [];
-  constructor(public app: App, public modalCtrl: ModalController,private navCtrl:NavController) {
+
+  constructor(public app: App, public modalCtrl: ModalController, private navCtrl: NavController) {
   }
 
   presentLoginModal() {
     let loginModal = this.modalCtrl.create(LoginModal);
     loginModal.onDidDismiss(data => {
-      if(data === true){
-      this.navCtrl.setRoot(OrdersPage);
+      if (data === true) {
+        this.navCtrl.setRoot(OrdersPage);
       }
     });
     loginModal.present();
   }
 
-  goToMenu(){
+  goToMenu() {
     this.navCtrl.setRoot(HomePage);
   }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrdersPage');
   }

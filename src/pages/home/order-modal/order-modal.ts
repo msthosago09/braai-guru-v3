@@ -24,7 +24,7 @@ export class OrderModal {
     this.arrayLength  = this.orders.length;
 
     for(let i = 0; i < this.arrayLength;i++){
-
+      this.orders[i].quantity = 1;
     }
 
     this.formGroup = new FormGroup({

@@ -51,7 +51,7 @@ export class HomePage {
     });
   }
 
-  openBasket(desc: string, price: number) {
+  openBasket() {
     if(this.orderedItems.size === 0){
       return;
     }
@@ -65,6 +65,7 @@ export class HomePage {
   }
 
   addOrder(order: any) {
+    order.quantity = 1;
     this.orderedItems.add(order);
     this.showToast('Item added');
     console.log(this.orderedItems)

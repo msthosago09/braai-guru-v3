@@ -12,42 +12,36 @@
 </ion-header>
 
 <ion-content padding>
-  <table>
-    <tr *ngFor="let order of orders">
-      <td style="width:80%">{{order.description}}</td>
-      <td>
-        <ion-select [(ngModel)]="orderQuantity">
-        <ion-option>0</ion-option>
-        <ion-option>1</ion-option>
-        <ion-option>2</ion-option>
-        <ion-option>3</ion-option>
-        <ion-option>4</ion-option>
-        <ion-option>5</ion-option>
-      </ion-select></td>
-    </tr>
-  </table>
-    <form [formGroup]="formGroup" novalidate>
-      <div *ngIf="arrayLength > 0">
-        <ion-list>
-          <ion-item>
-            <ion-label>Payment Method</ion-label>
-            <ion-select [(ngModel)]="paymentM" formControlName="paymentMethod">
-              <ion-option>Cash</ion-option>
-              <ion-option>Card</ion-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label><strong>Total Cost</strong></ion-label>
-            <ion-input type="text" value="R {{totalCost}}" readonly></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-row responsive-sm>
-              <ion-col>
-                <button color="danger" ion-button block (click)="placeOrder()">Order</button>
-              </ion-col>
-            </ion-row>
-          </ion-item>
-        </ion-list>
-      </div>
+  <ion-grid>
+    <ion-row *ngFor="let order of orders">
+      <ion-col>{{order.description}}</ion-col>
+      <ion-col col-auto>
+        <ion-item type="text"></ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div *ngIf="arrayLength > 0">
+    <form>
+      <ion-list>
+        <ion-item>
+          <ion-label>Payment Method</ion-label>
+          <ion-select [(ngModel)]="paymentM" formControlName="paymentMethod">
+            <ion-option>Cash</ion-option>
+            <ion-option>Card</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Total Cost</strong></ion-label>
+          <ion-input type="text" value="R {{totalCost}}" readonly></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-row responsive-sm>
+            <ion-col>
+              <button color="danger" ion-button block (click)="placeOrder()">Order</button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
     </form>
+  </div>
 </ion-content>
