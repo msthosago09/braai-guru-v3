@@ -13,15 +13,13 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row *ngFor="let order of orders">
+    <ion-row *ngFor="let order of orders; let i = index">
       <ion-col>{{order.description}}</ion-col>
-      <ion-col col-auto>
-        <ion-item type="text"></ion-item>
-      </ion-col>
+      <ion-col text-right>R{{order.totalCost}}</ion-col>
     </ion-row>
   </ion-grid>
   <div *ngIf="arrayLength > 0">
-    <form>
+    <form [formGroup]="formGroup">
       <ion-list>
         <ion-item>
           <ion-label>Payment Method</ion-label>
@@ -33,6 +31,10 @@
         <ion-item>
           <ion-label><strong>Total Cost</strong></ion-label>
           <ion-input type="text" value="R {{totalCost}}" readonly></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Ordered by:</ion-label>
+          <ion-input type="text"></ion-input>
         </ion-item>
         <ion-item>
           <ion-row responsive-sm>

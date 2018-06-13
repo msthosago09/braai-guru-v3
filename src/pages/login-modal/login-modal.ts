@@ -19,6 +19,10 @@ export class LoginModal {
     });
   }
 
+  closeModal(){
+    this.viewCtrl.dismiss(false);
+  }
+
   logon() {
     const password = this.formGroup.get('password').value;
     if (password === '5432' || password === '9999') {

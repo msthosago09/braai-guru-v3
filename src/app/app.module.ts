@@ -11,6 +11,7 @@ import {OrderModal} from "../pages/home/order-modal/order-modal";
 import {SplashPage} from "../pages/splash-page/splash-page";
 import {DataProvider} from "../providers/data";
 import {LoginModal} from "../pages/login-modal/login-modal";
+import {QuantityModal} from "../pages/home/quantity-modal/quantity-modal";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {LoginModal} from "../pages/login-modal/login-modal";
     OrdersPage,
     LoginModal,
     OrderModal,
-    SplashPage
+    SplashPage,
+    QuantityModal
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import {LoginModal} from "../pages/login-modal/login-modal";
     HomePage,
     OrdersPage,
     LoginModal,
-    OrderModal
+    OrderModal,
+    QuantityModal
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Place Order
+    </ion-title>
+    <ion-buttons end icon-only>
+      <button outline ion-button (click)="closeModal()">
+        <ion-icon name="close" right></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="formGroup" (submit)="placeOrder()">
+    <ion-grid>
+      <ion-row>
+        <ion-col>{{order.description}} R{{order.price}}<br/></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>Quantity: <input id="number" formControlName="quantityValue" type="number" min="1" max="10">
+        </ion-col>
+      </ion-row>
+      <ion-row responsive-sm>
+        <ion-col>
+          <button type="submit" color="primary" ion-button block>Order</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

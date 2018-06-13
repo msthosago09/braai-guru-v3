@@ -4,6 +4,7 @@ import {OrderModal} from "./order-modal/order-modal";
 import {DataProvider} from "../../providers/data";
 import {OrdersPage} from "../orders/orders";
 import {LoginModal} from "../login-modal/login-modal";
+import {QuantityModal} from "./quantity-modal/quantity-modal";
 
 @Component({
   selector: 'page-home',
@@ -13,7 +14,6 @@ export class HomePage {
 
   public menuItems = [];
   private orderedItems:any;
-  private currentOrder: any;
 
   constructor(public app: App, private data: DataProvider, public modalCtrl: ModalController, private toast: ToastController,
               private loadingCtrl: LoadingController, private alertCtrl: AlertController, private navCtrl:NavController) {
@@ -53,11 +53,13 @@ export class HomePage {
 
   openBasket() {
     if(this.orderedItems.size === 0){
+      this.showToast('Cart is empty');
       return;
     }
     let orderModal = this.modalCtrl.create(OrderModal, {orders: this.orderedItems});
     orderModal.onDidDismiss(data => {
       if(data == true){
+        this.orderedItems = new Set();
         this.showToast('Order completed');
       }
     });
@@ -65,10 +67,16 @@ export class HomePage {
   }
 
   addOrder(order: any) {
-    order.quantity = 1;
-    this.orderedItems.add(order);
-    this.showToast('Item added');
-    console.log(this.orderedItems)
+    let quantityModal = this.modalCtrl.create(QuantityModal, {item:order});
+    quantityModal.onDidDismiss(data => {
+      if(data){
+        order.orderedQuantity = data;
+        order.totalCost = (data*order.price);
+        this.orderedItems.add(order);
+        this.showToast('Item added');
+      }
+    });
+    quantityModal.present();
   }
 
   showToast(msg:string) {

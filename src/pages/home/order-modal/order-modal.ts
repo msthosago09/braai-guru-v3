@@ -23,29 +23,22 @@ export class OrderModal {
     this.orders = Array.from(this.ordersSet);
     this.arrayLength  = this.orders.length;
 
-    for(let i = 0; i < this.arrayLength;i++){
-      this.orders[i].quantity = 1;
-    }
-
     this.formGroup = new FormGroup({
-      quantity: new FormControl('', Validators.required),
+      grandTotal: new FormControl('', Validators.required),
       paymentMethod: new FormControl('', Validators.required),
+      orderedBy: new FormControl('',Validators.required)
     });
-  }
-
-  quantityChange(quantChange){
-
+    for (let obj of this.orders) {
+      this.totalCost += obj.totalCost;
+    }
   }
 
   placeOrder() {
-
+    this.data.placeOrder(this.orders);
+    this.viewCtrl.dismiss(true);
   }
 
   closeModal(){
     this.viewCtrl.dismiss(false);
-  }
-
-  dismiss(status: boolean) {
-    this.viewCtrl.dismiss(status);
   }
 }

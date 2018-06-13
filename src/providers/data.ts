@@ -22,8 +22,8 @@ export class DataProvider {
     return this.httpClient.get("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?apiKey=" + this.apiKey);
   }
 
-  placeOrder(order): boolean {
-    return null;
+  placeOrder(order): Observable<any> {
+    return this.httpClient.post("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?apiKey=" + this.apiKey,order);
   }
 
   getMenuItems(): Observable<any> {
@@ -32,10 +32,6 @@ export class DataProvider {
 
   addMenuItem(menuItem): Promise<any> {
     return null;
-  }
-
-  getUserInfo(): Observable<any> {
-    return this.httpClient.get("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/users?apiKey=" + this.apiKey);
   }
 
   deleteMenuItem(id): Observable<any> {
