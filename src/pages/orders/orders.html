@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="danger">
     <ion-title>Orders</ion-title>
     <ion-buttons end>
       <button outline ion-button (click)="openMenuPage()">
@@ -19,40 +19,31 @@
 
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <div class="wrapper">
-    <section class="blue" (click)="processOrder('id')">
-      <h2>Order #356</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Pellentesque nisl mi, mollis aliquet auctor eu, sodales et quam.
-        Vivamus fringilla ex at erat interdum euismod.
-        Vivamus posuere, leo lobortis fermentum tempor, tellus justo laoreet
-        lectus, ac feugiat nisi augue ac velit. Integer eget rhoncus leo.</p>
-
+    <section *ngFor="let order of incompleteOrders;" class="blue" (click)="processOrder(order._id)">
+      <h2>Order #{{order.groupID}}</h2>
+      <p>{{order.description}}</p>
+      <p>Quantity: {{order.orderedQuantity}}</p>
+      <p>Total: R{{order.totalCost}}</p>
+      <p>Ordered by: {{order.orderedBy}}</p>
+      <br/>
       <p>Tap to complete order.</p>
     </section>
 
-    <section class="red">
-      <h2>TypeScript</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl
-        mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat
-        interdum euismod.
-        Vivamus posuere, leo lobortis fermentum tempor, tellus justo laoreet lectus,
-        ac feugiat nisi augue ac velit. Integer eget rhoncus leo.</p>
-    </section>
-
-
-    <section class="red">
-      <h2>HTML5</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat interdum euismod.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat interdum euismod.</p>
-    </section>
-    <section class="red">
-      <h2>TypeScript</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl
-        mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat
-        interdum euismod.
-        Vivamus posuere, leo lobortis fermentum tempor, tellus justo laoreet lectus,
-        ac feugiat nisi augue ac velit. Integer eget rhoncus leo.</p>
+    <section class="red" *ngFor="let order of completeOrders;">
+      <h2>Order #{{order.groupID}}</h2>
+      <p>{{order.description}}</p>
+      <p>Quantity: {{order.orderedQuantity}}</p>
+      <p>Total: R{{order.totalCost}}</p>
+      <p>Ordered by: {{order.orderedBy}}</p>
     </section>
 
   </div>

@@ -31,15 +31,22 @@ export class DataProvider {
     return this.httpClient.get("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/menu-items?apiKey=" + this.apiKey);
   }
 
-  addMenuItem(menuItem): Promise<any> {
-    return null;
+  completeOrder(order):Promise<any> {
+    const data = {"$set": {"status":"complete"}};
+    return this.httpClient.put("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders/"+order+"?apiKey=" + this.apiKey,data).toPromise();
   }
 
-  deleteMenuItem(id): Observable<any> {
-    return null;
+  addOrderer(id,orderer):Promise<any> {
+    return this.httpClient.put("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders/"+id+"?apiKey=" + this.apiKey,orderer).toPromise();
   }
 
-  completeOrder(id): Observable<any> {
-    return null;
+  getCompletedOrders(): Observable<any>{
+    const stat = JSON.stringify({"status":"complete"});
+    return this.httpClient.get("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?q="+stat + "&apiKey="+this.apiKey);
+  }
+
+  getIncompleteOrders(): Observable<any>{
+    const stat = JSON.stringify({"status":"incomplete"});
+    return this.httpClient.get("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?q="+stat + "&apiKey="+this.apiKey);
   }
 }

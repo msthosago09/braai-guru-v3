@@ -14,10 +14,11 @@ export class HomePage {
 
   public menuItems = [];
   private orderedItems:any;
-
+  private globalId: string;
   constructor(public app: App, private data: DataProvider, public modalCtrl: ModalController, private toast: ToastController,
               private loadingCtrl: LoadingController, private alertCtrl: AlertController, private navCtrl:NavController) {
     this.orderedItems = new Set();
+    this.globalId = this.makeid();
   }
 
   doRefresh(refresher) {
@@ -60,6 +61,7 @@ export class HomePage {
     orderModal.onDidDismiss(data => {
       if(data == true){
         this.orderedItems = new Set();
+        this.globalId = this.makeid();
         this.showToast('Order completed');
       }
     });
@@ -70,13 +72,36 @@ export class HomePage {
     let quantityModal = this.modalCtrl.create(QuantityModal, {item:order});
     quantityModal.onDidDismiss(data => {
       if(data){
+        order._id = this.makeIndId();
+        order.groupID = this.globalId;
         order.orderedQuantity = data;
         order.totalCost = (data*order.price);
+        order.status = "incomplete";
         this.orderedItems.add(order);
         this.showToast('Item added');
       }
     });
     quantityModal.present();
+  }
+
+  makeid(): string {
+    let text = "";
+    const possible = "0123456789";
+
+    for (let i = 0; i < 4; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+  }
+
+  makeIndId(): string {
+    let text = "";
+    const possible = "ABCDEFGHIJKLMONPQRSTUVWZX0123456789";
+
+    for (let i = 0; i < 6; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
   }
 
   showToast(msg:string) {
