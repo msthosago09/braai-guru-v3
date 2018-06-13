@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, ToastController} from 'ionic-angular';
+import {AlertController, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {HomePage} from "../home/home";
+import {DataProvider} from "../../providers/data";
 
 /**
  * Generated class for the OrdersPage page.
@@ -15,7 +16,30 @@ import {HomePage} from "../home/home";
 export class OrdersPage {
 
   public orders = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController) {
+  constructor(public navCtrl: NavController, public data: DataProvider, private toast: ToastController,
+              private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+  }
+
+  ionViewWillEnter(){
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present().then(() => {
+      this.data.getMenuItems().subscribe(data => {
+        this.orders = data;
+        loading.dismiss();
+      },error =>{
+        const popupAlert = this.alertCtrl.create({
+          title: 'Failed!',
+          message: 'Retrying',
+          buttons: ['OK'],
+          enableBackdropDismiss: true
+        });
+        popupAlert.present();
+        loading.dismiss();
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      });
+    });
   }
 
   ionViewDidLoad() {

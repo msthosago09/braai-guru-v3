@@ -166,7 +166,8 @@ var DataProvider = /** @class */ (function () {
         return this.httpClient.get("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?apiKey=" + this.apiKey);
     };
     DataProvider.prototype.placeOrder = function (order) {
-        return this.httpClient.post("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?apiKey=" + this.apiKey, order);
+        console.log('place order');
+        return this.httpClient.post("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?apiKey=" + this.apiKey, order).toPromise();
     };
     DataProvider.prototype.getMenuItems = function () {
         return this.httpClient.get("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/menu-items?apiKey=" + this.apiKey);
@@ -182,9 +183,10 @@ var DataProvider = /** @class */ (function () {
     };
     DataProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
     ], DataProvider);
     return DataProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=data.js.map
@@ -394,8 +396,10 @@ var OrderModal = /** @class */ (function () {
         }
     }
     OrderModal.prototype.placeOrder = function () {
-        this.data.placeOrder(this.orders);
-        this.viewCtrl.dismiss(true);
+        var _this = this;
+        this.data.placeOrder(this.orders).then(function () {
+            return _this.viewCtrl.dismiss(true);
+        });
     };
     OrderModal.prototype.closeModal = function () {
         this.viewCtrl.dismiss(false);
@@ -404,9 +408,10 @@ var OrderModal = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
             selector: 'order-modal',template:/*ion-inline-start:"C:\Users\Mahobala\Documents\GitHub\braai-gurus\braai-guru\src\pages\home\order-modal\order-modal.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Place Order\n    </ion-title>\n    <ion-buttons end icon-only>\n      <button outline ion-button (click)="closeModal()">\n        <ion-icon name="close" right></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-grid>\n    <ion-row *ngFor="let order of orders; let i = index">\n      <ion-col>{{order.description}}</ion-col>\n      <ion-col text-right>R{{order.totalCost}}</ion-col>\n    </ion-row>\n  </ion-grid>\n  <div *ngIf="arrayLength > 0">\n    <form [formGroup]="formGroup">\n      <ion-list>\n        <ion-item>\n          <ion-label>Payment Method</ion-label>\n          <ion-select [(ngModel)]="paymentM" formControlName="paymentMethod">\n            <ion-option>Cash</ion-option>\n            <ion-option>Card</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-label><strong>Total Cost</strong></ion-label>\n          <ion-input type="text" value="R {{totalCost}}" readonly></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>Ordered by:</ion-label>\n          <ion-input type="text"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-row responsive-sm>\n            <ion-col>\n              <button color="danger" ion-button block (click)="placeOrder()">Order</button>\n            </ion-col>\n          </ion-row>\n        </ion-item>\n      </ion-list>\n    </form>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Mahobala\Documents\GitHub\braai-gurus\braai-guru\src\pages\home\order-modal\order-modal.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_3__providers_data__["a" /* DataProvider */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* ViewController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_data__["a" /* DataProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_data__["a" /* DataProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavParams */]) === "function" && _c || Object])
     ], OrderModal);
     return OrderModal;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=order-modal.js.map
@@ -615,6 +620,7 @@ var MyApp = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_data__ = __webpack_require__(101);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -627,6 +633,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the OrdersPage page.
  *
@@ -634,12 +641,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var OrdersPage = /** @class */ (function () {
-    function OrdersPage(navCtrl, navParams, toast) {
+    function OrdersPage(navCtrl, data, toast, loadingCtrl, alertCtrl) {
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
+        this.data = data;
         this.toast = toast;
+        this.loadingCtrl = loadingCtrl;
+        this.alertCtrl = alertCtrl;
         this.orders = [];
     }
+    OrdersPage.prototype.ionViewWillEnter = function () {
+        var _this = this;
+        var loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+        });
+        loading.present().then(function () {
+            _this.data.getMenuItems().subscribe(function (data) {
+                _this.orders = data;
+                loading.dismiss();
+            }, function (error) {
+                var popupAlert = _this.alertCtrl.create({
+                    title: 'Failed!',
+                    message: 'Retrying',
+                    buttons: ['OK'],
+                    enableBackdropDismiss: true
+                });
+                popupAlert.present();
+                loading.dismiss();
+                _this.navCtrl.setRoot(_this.navCtrl.getActive().component);
+            });
+        });
+    };
     OrdersPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad OrdersPage');
     };
@@ -661,9 +692,10 @@ var OrdersPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-orders',template:/*ion-inline-start:"C:\Users\Mahobala\Documents\GitHub\braai-gurus\braai-guru\src\pages\orders\orders.html"*/'<!--\n  Generated template for the OrdersPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Orders</ion-title>\n    <ion-buttons end>\n      <button outline ion-button (click)="openMenuPage()">\n        Menu\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <div class="wrapper">\n    <section class="blue" (click)="processOrder(\'id\')">\n      <h2>Order #356</h2>\n      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n        Pellentesque nisl mi, mollis aliquet auctor eu, sodales et quam.\n        Vivamus fringilla ex at erat interdum euismod.\n        Vivamus posuere, leo lobortis fermentum tempor, tellus justo laoreet\n        lectus, ac feugiat nisi augue ac velit. Integer eget rhoncus leo.</p>\n\n      <p>Tap to complete order.</p>\n    </section>\n\n    <section class="red">\n      <h2>TypeScript</h2>\n      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl\n        mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat\n        interdum euismod.\n        Vivamus posuere, leo lobortis fermentum tempor, tellus justo laoreet lectus,\n        ac feugiat nisi augue ac velit. Integer eget rhoncus leo.</p>\n    </section>\n\n\n    <section class="red">\n      <h2>HTML5</h2>\n      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat interdum euismod.\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat interdum euismod.</p>\n    </section>\n    <section class="red">\n      <h2>TypeScript</h2>\n      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl\n        mi, mollis aliquet auctor eu, sodales et quam. Vivamus fringilla ex at erat\n        interdum euismod.\n        Vivamus posuere, leo lobortis fermentum tempor, tellus justo laoreet lectus,\n        ac feugiat nisi augue ac velit. Integer eget rhoncus leo.</p>\n    </section>\n\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Mahobala\Documents\GitHub\braai-gurus\braai-guru\src\pages\orders\orders.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_data__["a" /* DataProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_data__["a" /* DataProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object])
     ], OrdersPage);
     return OrdersPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=orders.js.map

@@ -22,8 +22,9 @@ export class DataProvider {
     return this.httpClient.get("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?apiKey=" + this.apiKey);
   }
 
-  placeOrder(order): Observable<any> {
-    return this.httpClient.post("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?apiKey=" + this.apiKey,order);
+  placeOrder(order): Promise<any> {
+    console.log('place order');
+    return this.httpClient.post("https://api.mlab.com/api/1/databases/heroku_7dkkjm9t/collections/orders?apiKey=" + this.apiKey,order).toPromise();
   }
 
   getMenuItems(): Observable<any> {

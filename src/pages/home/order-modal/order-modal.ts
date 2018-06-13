@@ -34,8 +34,9 @@ export class OrderModal {
   }
 
   placeOrder() {
-    this.data.placeOrder(this.orders);
-    this.viewCtrl.dismiss(true);
+    this.data.placeOrder(this.orders).then(() =>
+      this.viewCtrl.dismiss(true)
+  );
   }
 
   closeModal(){
